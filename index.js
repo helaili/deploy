@@ -28,8 +28,11 @@ module.exports = app => {
   app.on('pull_request.labeled', async context => {
     const config = await getConfig(context, 'probot-config.yml')
     context.log.debug(config, 'Loaded config')
-    context.log.debug(context.payload.label.id, 'Received label id')
-    
+    context.log.debug(context.payload.label.name, 'Received label\'s name')
+
+    if (config[context.payload.label.name]) {
+      context.log.debug(config[context.payload.label.name], 'Environment found')
+    }
     return 1
   })
 
