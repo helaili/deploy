@@ -3,3 +3,8 @@ labels:
     environment: staging
   deploy-test:
     environment: test
+    description: A test environment based on Docker
+    transient_environment: true
+    payload: 
+      port: 8080
+      https: true
