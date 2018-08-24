@@ -6,6 +6,8 @@ module.exports = app => {
   // Your code here
   app.log('Yay, the app was loaded!')
 
+  const getConfig = require('probot-config')
+
   // Get an express router to expose new HTTP endpoints
   const router = app.route('/my-app')
 
@@ -24,8 +26,11 @@ module.exports = app => {
   })
 
   app.on('pull_request.labeled', async context => {
-    const issueComment = context.issue({ body: 'Thanks for this label!' })
-    return context.github.pullRequests.createComment(issueComment)
+    const config = await getConfig(context, 'probot-config.yml')
+    context.log.debug(config, 'Loaded config')
+    context.log.debug(context.payload.label.id, 'Received label id')
+    
+    return 1
   })
 
   // For more information on building apps:
