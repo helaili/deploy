@@ -6,9 +6,26 @@ module.exports = app => {
   // Your code here
   app.log('Yay, the app was loaded!')
 
-  app.on('issues.opened', async context => {
-    const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
-    return context.github.issues.createComment(issueComment)
+  // Get an express router to expose new HTTP endpoints
+  const router = app.route('/my-app')
+
+  // Use any middleware
+  router.use(require('express').static('public'))
+
+  router.get('/auth', (req, res) => {
+    app.log('Auth with Get')
+    res.end('Auth with Get')
+
+  })
+
+  router.post('/auth', (req, res) => {
+    app.log('Auth with Post')
+    res.end('Auth with Post')
+  })
+
+  app.on('pull_request.labeled', async context => {
+    const issueComment = context.issue({ body: 'Thanks for this label!' })
+    return context.github.pullRequests.createComment(issueComment)
   })
 
   // For more information on building apps:
