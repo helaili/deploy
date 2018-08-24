@@ -1,0 +1,5 @@
+labels:
+  Deploy%20Staging:
+    environment: staging
+  deploy-test:
+    environment: test
