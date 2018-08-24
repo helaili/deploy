@@ -1,6 +1,6 @@
 # probot-deploy
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that 
+> A [Probot](https://github.com/probot/probot) app triggering deployments on GitHub
 
 ## Setup
 
