@@ -28,7 +28,8 @@ module.exports = app => {
     context.log.debug(config, 'Loaded config')
     context.log.debug('Received label\'s name:', context.payload.label.name)
 
-    let encodedLabelName = encodeURI(context.payload.label.name)
+    let labelName = context.payload.label.name
+    let encodedLabelName = encodeURI(labelName)
     context.log.debug('Encoded label\'s name:', encodedLabelName)
 
     if (config.labels[encodedLabelName]) {
@@ -44,13 +45,15 @@ module.exports = app => {
       let deploymentResult = context.github.repos.createDeployment(deployment)
 
       context.log.debug(deploymentResult, 'Deployment response')
+
+      let labelCleanup = {
+        'owner': context.payload.pull_request.head.repo.owner.login,
+        'repo': context.payload.pull_request.head.repo.name,
+        'number': context.payload.pull_request.number,
+        'name': labelName
+      }
+      context.github.issues.removeLabel(labelCleanup)
     }
-    return 1
+    return deploymentResult
   })
-
-  // For more information on building apps:
-  // https://probot.github.io/docs/
-
-  // To get your app running against GitHub, see:
-  // https://probot.github.io/docs/development/
 }
