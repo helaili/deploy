@@ -1,11 +1,10 @@
-# probot-deploy
 # probot-deploy [![Build Status](https://travis-ci.org/helaili/probot-deploy.svg?branch=master)](https://travis-ci.org/helaili/probot-deploy)
 
-> A [Probot](https://github.com/probot/probot) app triggering deployments on GitHub
 A [Probot](https://github.com/probot/probot) app triggering deployment events on GitHub based on pull request labels.
 
 
-Commit a `.github/probot-config.yml` file in your repository
+- Commit a `.github/probot-config.yml` file in your repository with the description of your environments. Spaces must be escaped. You can use whichever [environment parameter](https://developer.github.com/v3/repos/deployments/#parameters) used by GitHub's deployment API
+
 
 ```
 labels:
@@ -21,21 +20,14 @@ labels:
       https: true
 ```
 
-You can use whichever environment parameter used by GitHub's deployment API
+- Create matching labels in your repository
 
-Create matching labels in your repository
+![image](https://user-images.githubusercontent.com/2787414/44651597-1dab3100-a9ea-11e8-842d-939553d05df0.png)
 
+- Now just add one of this labels to your PR. The label will automatically be removed once the deployment has been requested.
 
+![image](https://user-images.githubusercontent.com/2787414/44652042-31a36280-a9eb-11e8-8ac6-0e89ad72a1c7.png)
 
-## Setup
-
-```sh
-# Install dependencies
-npm install
-
-# Run the bot
-npm start
-```
 
 ## Contributing
 
