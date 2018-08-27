@@ -10,8 +10,6 @@ module.exports = app => {
 
   // Get an express router to expose new HTTP endpoints
   const router = app.route('/my-app')
-
-  // Use any middleware
   router.use(require('express').static('public'))
 
   router.get('/auth', (req, res) => {
@@ -28,17 +26,34 @@ module.exports = app => {
   app.on('pull_request.labeled', async context => {
     const config = await getConfig(context, 'probot-config.yml')
     context.log.debug(config, 'Loaded config')
-    context.log.debug(context.payload.label.name, 'Received label\'s name')
+    context.log.debug('Received label\'s name:', context.payload.label.name)
 
-    if (config[context.payload.label.name]) {
-      context.log.debug(config[context.payload.label.name], 'Environment found')
+    let labelName = context.payload.label.name
+    let encodedLabelName = encodeURI(labelName)
+    context.log.debug('Encoded label\'s name:', encodedLabelName)
+
+    if (config.labels[encodedLabelName]) {
+      context.log.debug(config.labels[encodedLabelName], 'Label config found')
+
+      let deployment = config.labels[encodedLabelName]
+      deployment.owner = context.payload.pull_request.head.repo.owner.login
+      deployment.repo = context.payload.pull_request.head.repo.name
+      deployment.ref = context.payload.pull_request.head.sha
+
+      context.log.debug(deployment, 'Deployment request')
+
+      let deploymentResult = context.github.repos.createDeployment(deployment)
+
+      context.log.debug(deploymentResult, 'Deployment response')
+
+      let labelCleanup = {
+        'owner': context.payload.pull_request.head.repo.owner.login,
+        'repo': context.payload.pull_request.head.repo.name,
+        'number': context.payload.pull_request.number,
+        'name': labelName
+      }
+      context.github.issues.removeLabel(labelCleanup)
     }
-    return 1
+    return deploymentResult
   })
-
-  // For more information on building apps:
-  // https://probot.github.io/docs/
-
-  // To get your app running against GitHub, see:
-  // https://probot.github.io/docs/development/
 }
