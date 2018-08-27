@@ -2,6 +2,29 @@
 
 > A [Probot](https://github.com/probot/probot) app triggering deployments on GitHub
 
+
+Commit a `.github/probot-config.yml` file in your repository
+
+```
+labels:
+  Deploy%20To%20Staging:
+    environment: staging
+  deploy-to-test:
+    environment: test
+    description: A test environment based on Docker
+    transient_environment: true
+    auto_merge: false
+    payload:
+      port: 8080
+      https: true
+```
+
+You can use whichever environment parameter used by GitHub's deployment API
+
+Create matching labels in your repository
+
+
+
 ## Setup
 
 ```sh
