@@ -26,8 +26,7 @@ labels:
 
 - Now just add one of this labels to your PR. The label will automatically be removed once the deployment has been requested.
 
-![image](https://user-images.githubusercontent.com/2787414/44652042-31a36280-a9eb-11e8-8ac6-0e89ad72a1c7.png)
-
+![image](https://user-images.githubusercontent.com/2787414/44652769-15a0c080-a9ed-11e8-97bf-70cec7ee56cb.png)
 
 ## Contributing
 
