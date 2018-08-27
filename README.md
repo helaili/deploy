@@ -1,6 +1,8 @@
 # probot-deploy
+# probot-deploy [![Build Status](https://travis-ci.org/helaili/probot-deploy.svg?branch=master)](https://travis-ci.org/helaili/probot-deploy)
 
 > A [Probot](https://github.com/probot/probot) app triggering deployments on GitHub
+A [Probot](https://github.com/probot/probot) app triggering deployment events on GitHub based on pull request labels.
 
 
 Commit a `.github/probot-config.yml` file in your repository
