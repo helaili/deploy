@@ -15,7 +15,6 @@ module.exports = app => {
   router.get('/auth', (req, res) => {
     app.log('Auth with Get')
     res.end('Auth with Get')
-
   })
 
   router.post('/auth', (req, res) => {
@@ -25,12 +24,9 @@ module.exports = app => {
 
   app.on('pull_request.labeled', async context => {
     const config = await getConfig(context, 'probot-config.yml')
-    context.log.debug(config, 'Loaded config')
-    context.log.debug('Received label\'s name:', context.payload.label.name)
 
     let labelName = context.payload.label.name
     let encodedLabelName = encodeURI(labelName)
-    context.log.debug('Encoded label\'s name:', encodedLabelName)
 
     if (config.labels[encodedLabelName]) {
       context.log.debug(config.labels[encodedLabelName], 'Label config found')
@@ -40,11 +36,7 @@ module.exports = app => {
       deployment.repo = context.payload.pull_request.head.repo.name
       deployment.ref = context.payload.pull_request.head.sha
 
-      context.log.debug(deployment, 'Deployment request')
-
       let deploymentResult = context.github.repos.createDeployment(deployment)
-
-      context.log.debug(deploymentResult, 'Deployment response')
 
       let labelCleanup = {
         'owner': context.payload.pull_request.head.repo.owner.login,
@@ -53,7 +45,8 @@ module.exports = app => {
         'name': labelName
       }
       context.github.issues.removeLabel(labelCleanup)
+
+      return deploymentResult
     }
-    return deploymentResult
   })
 }
