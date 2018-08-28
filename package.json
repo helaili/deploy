@@ -37,6 +37,9 @@
       "jest"
     ]
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "nodemonConfig": {
     "exec": "npm start",
     "watch": [

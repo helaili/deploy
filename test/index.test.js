@@ -1,13 +1,27 @@
+const fs = require('fs')
+const path = require('path')
 const { Application } = require('probot')
-// Requiring our app implementation
 const myProbotApp = require('..')
 
-const issuesOpenedPayload = require('./fixtures/issues.opened.json')
+const deployLabelAppliedPayload = require('./fixtures/deploy-test_label.applied.json')
+const nonDeployLabelAppliedPayload = require('./fixtures/bug_label.applied.json')
+const configFile = './fixtures/probot-config.yml'
 
-test('that we can run tests', () => {
-  // your real tests go here
-  expect(1 + 2 + 3).toBe(6)
-})
+/*
+ * Load the config file
+ */
+function readMockConfig (fileName) {
+  let configData
+
+  try {
+    const filePath = path.resolve(__dirname, fileName)
+    configData = fs.readFileSync(filePath, 'utf8')
+  } catch (e) {
+    console.log(e)
+  }
+
+  return configData
+}
 
 describe('My Probot app', () => {
   let app, github
@@ -16,27 +30,46 @@ describe('My Probot app', () => {
     app = new Application()
     // Initialize the app based on the code from index.js
     app.load(myProbotApp)
+
+    let configData = Buffer.from(readMockConfig(configFile)).toString('base64')
+
     // This is an easy way to mock out the GitHub API
     github = {
       issues: {
-        createComment: jest.fn().mockReturnValue(Promise.resolve({}))
+        removeLabel: jest.fn().mockReturnValue(Promise.resolve({}))
+      },
+      repos: {
+        createDeployment: jest.fn().mockReturnValue(Promise.resolve({})),
+        getContent: jest.fn().mockReturnValue({
+          data: {
+            content: configData
+          }
+        })
       }
     }
     // Passes the mocked out GitHub API into out app instance
     app.auth = () => Promise.resolve(github)
   })
 
-  test('creates a comment when an issue is opened', async () => {
+  test('creates a deployment when a deploy label is applied to a PR', async () => {
     // Simulates delivery of an issues.opened webhook
     await app.receive({
-      event: 'issues.opened',
-      payload: issuesOpenedPayload
+      event: 'pull_request.labeled',
+      payload: deployLabelAppliedPayload
     })
 
-    // This test passes if the code in your index.js file calls `context.github.issues.createComment`
-    expect(github.issues.createComment).toHaveBeenCalled()
+    expect(github.repos.createDeployment).toHaveBeenCalled()
+    expect(github.issues.removeLabel).toHaveBeenCalled()
+  })
+
+  test('do not create a deployment when a non deploy label is applied to a PR', async () => {
+    // Simulates delivery of an issues.opened webhook
+    await app.receive({
+      event: 'pull_request.labeled',
+      payload: nonDeployLabelAppliedPayload
+    })
+
+    expect(github.repos.createDeployment).not.toHaveBeenCalled()
+    expect(github.issues.removeLabel).not.toHaveBeenCalled()
   })
 })
-
-// For more information about testing with Jest see:
-// https://facebook.github.io/jest/
