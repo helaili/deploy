@@ -34,7 +34,7 @@ module.exports = app => {
       deployment.ref = context.payload.pull_request.head.sha
 
       context.github.repos.createDeployment(deployment).then(function (deploymentResult) {
-          return deploymentResult
+        return deploymentResult
       }, function (apiError) {
         let errorMessage = JSON.parse(apiError.message)
         let body = `:rotating_light: Failed to trigger deployment. :rotating_light:\n${errorMessage.message}`
