@@ -33,13 +33,13 @@ module.exports = app => {
       deployment.repo = context.payload.pull_request.head.repo.name
       deployment.ref = context.payload.pull_request.head.sha
 
-      let deploymentResult
-      try {
-        deploymentResult = context.github.repos.createDeployment(deployment)
-      } catch (e) {
-        let body = `Failed to trigger deployment: ${e.message}`
-        if (e.documentation_url) {
-          body = body + `\nSee [the documentation](${e.documentation_url}) for more details`
+      context.github.repos.createDeployment(deployment).then(function (deploymentResult) {
+          return deploymentResult
+      }, function (apiError) {
+        let errorMessage = JSON.parse(apiError.message)
+        let body = `:rotating_light: Failed to trigger deployment. :rotating_light:\n${errorMessage.message}`
+        if (errorMessage.documentation_url) {
+          body = body + ` See [the documentation](${errorMessage.documentation_url}) for more details`
         }
 
         let errorComment = {
@@ -49,7 +49,7 @@ module.exports = app => {
           'body': body
         }
         context.github.issues.createComment(errorComment)
-      }
+      })
 
       let labelCleanup = {
         'owner': context.payload.pull_request.head.repo.owner.login,
@@ -58,8 +58,6 @@ module.exports = app => {
         'name': labelName
       }
       context.github.issues.removeLabel(labelCleanup)
-
-      return deploymentResult
     }
   })
 }
