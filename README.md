@@ -26,8 +26,6 @@ labels:
 
 - Now just add one of these labels to your PR. The label will automatically be removed once the deployment has been requested.
 
-![image](https://user-images.githubusercontent.com/2787414/44652769-15a0c080-a9ed-11e8-97bf-70cec7ee56cb.png)
-
 ## Contributing
 
 If you have suggestions for how probot-deploy could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
