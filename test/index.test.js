@@ -36,7 +36,8 @@ describe('My Probot app', () => {
     // This is an easy way to mock out the GitHub API
     github = {
       issues: {
-        removeLabel: jest.fn().mockReturnValue(Promise.resolve({}))
+        removeLabel: jest.fn().mockReturnValue(Promise.resolve({})),
+        createComment: jest.fn().mockReturnValue(Promise.resolve({}))
       },
       repos: {
         createDeployment: jest.fn().mockReturnValue(Promise.resolve({})),
@@ -71,5 +72,20 @@ describe('My Probot app', () => {
 
     expect(github.repos.createDeployment).not.toHaveBeenCalled()
     expect(github.issues.removeLabel).not.toHaveBeenCalled()
+  })
+
+  test('creates a comment when deployment fails', async () => {
+    // Returning an error
+    github.repos.createDeployment.mockImplementation(() => Promise.reject(new Error('{"message":"Conflict merging master into b4c150464b1236cc782cc590b391034f608056ec.","documentation_url":"https://developer.github.com/enterprise/2.14/v3/repos/deployments/#create-a-deployment"}')))
+
+    // Simulates delivery of an issues.opened webhook
+    await app.receive({
+      event: 'pull_request.labeled',
+      payload: deployLabelAppliedPayload
+    })
+
+    expect(github.repos.createDeployment).toHaveBeenCalled()
+    expect(github.issues.removeLabel).toHaveBeenCalled()
+    expect(github.issues.createComment).toHaveBeenCalled()
   })
 })
