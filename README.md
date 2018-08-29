@@ -15,6 +15,8 @@ labels:
     description: A test environment based on Docker
     transient_environment: true
     auto_merge: false
+    required_contexts:
+      - continuous-integration/travis-ci/push
     payload:
       port: 8080
       https: true
@@ -25,6 +27,14 @@ labels:
 ![image](https://user-images.githubusercontent.com/2787414/44651597-1dab3100-a9ea-11e8-842d-939553d05df0.png)
 
 - Now just add one of these labels to your PR. The label will automatically be removed once the deployment has been requested.
+
+![image](https://user-images.githubusercontent.com/2787414/44785547-91d40900-ab91-11e8-8d24-4a5fa10989e5.png)
+
+In case you haven't waited for your Continuous Integration or other integrations to complete, or if one of them has failed and should be considered optional, you will get the comment below. You then have to modify your label description and include a `required_contexts` section which will list those contexts which are required. All others will be optional.
+
+![image](https://user-images.githubusercontent.com/2787414/44785471-4cafd700-ab91-11e8-9b91-d95dec43cef3.png)
+
+
 
 ## Contributing
 
