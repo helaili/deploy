@@ -3,8 +3,6 @@
  * @param {import('probot').Application} app - Probot's Application class.
  */
 module.exports = app => {
-  app.log('Yay, the app was loaded!')
-
   const getConfig = require('probot-config')
 
   // Get an express router to expose new HTTP endpoints
