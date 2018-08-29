@@ -37,7 +37,7 @@ module.exports = app => {
       try {
         deploymentResult = context.github.repos.createDeployment(deployment)
       } catch (e) {
-        let body = `Failed to deploy: ${e.message}`
+        let body = `Failed to trigger deployment: ${e.message}`
         if (e.documentation_url) {
           body = body + `\nSee [the documentation](${e.documentation_url}) for more details`
         }
