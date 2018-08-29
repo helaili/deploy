@@ -2,6 +2,7 @@
 
 A [Probot](https://github.com/probot/probot) app triggering deployment events on GitHub based on pull request labels.
 
+## Setup
 
 - Commit a `.github/probot-config.yml` file in your repository with the description of your environments. Spaces must be escaped. You can use whichever [environment parameter](https://developer.github.com/v3/repos/deployments/#parameters) used by GitHub's deployment API
 
@@ -30,10 +31,16 @@ labels:
 
 ![image](https://user-images.githubusercontent.com/2787414/44785547-91d40900-ab91-11e8-8d24-4a5fa10989e5.png)
 
+
+## FAQ
+
 In case you haven't waited for your Continuous Integration or other integrations to complete, or if one of them has failed and should be considered optional, you will get the comment below. You then have to modify your label description and include a `required_contexts` section which will list those contexts which are required. All others will be optional.
 
 ![image](https://user-images.githubusercontent.com/2787414/44785471-4cafd700-ab91-11e8-9b91-d95dec43cef3.png)
 
+If your branch is conflicting with master, your deployment will fail (see below). If you do want to deploy a conflicting branch, then set `auto_merge` to `false` in your label configuration.
+
+![image](https://user-images.githubusercontent.com/2787414/44785703-22aae480-ab92-11e8-95f3-617455932a41.png)
 
 
 ## Contributing

@@ -6,3 +6,4 @@ package-lock.json
 coverage
 .DS_Store
 *.now.sh
+now.*.json
