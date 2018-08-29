@@ -2,6 +2,8 @@
 
 A [Probot](https://github.com/probot/probot) app triggering deployment events on GitHub based on pull request labels.
 
+![probt-deploy-640](https://user-images.githubusercontent.com/2787414/44789192-3f4c1a00-ab9c-11e8-9093-353dfbe1bc1e.gif)
+
 :warning: This app doesn't deploy anything. :warning:  It just triggers a deployment request which will be forwarded to any webhook listening to the deploy event on your repo or on your organization. Check GitHub's [deployment API](https://developer.github.com/v3/repos/deployments/) for more information. 
 
 ## Setup
