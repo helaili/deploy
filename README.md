@@ -24,7 +24,7 @@ labels:
 
 ![image](https://user-images.githubusercontent.com/2787414/44651597-1dab3100-a9ea-11e8-842d-939553d05df0.png)
 
-- Now just add one of this labels to your PR. The label will automatically be removed once the deployment has been requested.
+- Now just add one of these labels to your PR. The label will automatically be removed once the deployment has been requested.
 
 ![image](https://user-images.githubusercontent.com/2787414/44652769-15a0c080-a9ed-11e8-97bf-70cec7ee56cb.png)
 
