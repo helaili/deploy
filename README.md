@@ -6,6 +6,8 @@ A [Probot](https://github.com/probot/probot) app triggering deployment events on
 
 ## Setup
 
+- Install the app from [its public page](https://github.com/apps/probot-deploy)
+
 - Commit a `.github/probot-config.yml` file in your repository with the description of your environments. Spaces must be escaped. You can use whichever [environment parameter](https://developer.github.com/v3/repos/deployments/#parameters) used by GitHub's deployment API
 
 
@@ -44,6 +46,7 @@ If your branch is conflicting with master, your deployment will fail (see below)
 
 ![image](https://user-images.githubusercontent.com/2787414/44785703-22aae480-ab92-11e8-95f3-617455932a41.png)
 
+This app works for both github.com and GitHub Enterprise. In the later case, you will need to run your own instance of this app as described in [the Pobot documentation](https://probot.github.io/docs/deployment/). Do not forgot to set the `GHE_HOST` environment variable as described [here](https://probot.github.io/docs/github-api/#github-enterprise). 
 
 ## Contributing
 
