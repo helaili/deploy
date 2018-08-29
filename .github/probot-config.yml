@@ -1,11 +1,11 @@
 labels:
-  Deploy%20Staging:
+  Deploy%20to%20Staging:
     environment: staging
   deploy-test:
     environment: test
     description: A test environment based on Docker
     transient_environment: true
     auto_merge: false
-    payload: 
+    payload:
       port: 8080
       https: true

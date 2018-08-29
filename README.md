@@ -8,7 +8,7 @@ A [Probot](https://github.com/probot/probot) app triggering deployment events on
 
 ```
 labels:
-  Deploy%20To%20Staging:
+  Deploy%20to%20Staging:
     environment: staging
   deploy-to-test:
     environment: test
