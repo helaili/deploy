@@ -33,7 +33,23 @@ module.exports = app => {
       deployment.repo = context.payload.pull_request.head.repo.name
       deployment.ref = context.payload.pull_request.head.sha
 
-      let deploymentResult = context.github.repos.createDeployment(deployment)
+      let deploymentResult
+      try {
+        deploymentResult = context.github.repos.createDeployment(deployment)
+      } catch (e) {
+        let body = `Failed to deploy: ${e.message}`
+        if (e.documentation_url) {
+          body = body + `\nSee [the documentation](${e.documentation_url}) for more details`
+        }
+
+        let errorComment = {
+          'owner': context.payload.pull_request.head.repo.owner.login,
+          'repo': context.payload.pull_request.head.repo.name,
+          'number': context.payload.pull_request.number,
+          'body': body
+        }
+        context.github.issues.createComment(errorComment)
+      }
 
       let labelCleanup = {
         'owner': context.payload.pull_request.head.repo.owner.login,
