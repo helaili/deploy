@@ -29,7 +29,7 @@ module.exports = app => {
       let deployment = config.labels[encodedLabelName]
       deployment.owner = context.payload.pull_request.head.repo.owner.login
       deployment.repo = context.payload.pull_request.head.repo.name
-      deployment.ref = context.payload.pull_request.head.sha
+      deployment.ref = context.payload.pull_request.head.ref
 
       context.github.repos.createDeployment(deployment).then(function (deploymentResult) {
         return deploymentResult
