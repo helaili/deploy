@@ -1,12 +1,12 @@
 {
-  "name": "probot-deploy",
+  "name": "deploy",
   "version": "1.0.0",
   "description": "",
-  "author": "Alain Hélaïli <helaili@github.com> (https://helaili.gitub.io/probot-deploy)",
+  "author": "Alain Hélaïli <helaili@github.com> (https://helaili.gitub.io/deploy)",
   "license": "ISC",
-  "repository": "https://github.com/helaili/probot-deploy.git",
-  "homepage": "https://github.com/helaili/probot-deploy",
-  "bugs": "https://github.com/helaili/probot-deploy/issues",
+  "repository": "https://github.com/helaili/deploy.git",
+  "homepage": "https://github.com/helaili/deploy",
+  "bugs": "https://github.com/helaili/deploy/issues",
   "keywords": [
     "probot",
     "github",

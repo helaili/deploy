@@ -1,16 +1,16 @@
-# deploy [![Build Status](https://travis-ci.org/helaili/probot-deploy.svg?branch=master)](https://travis-ci.org/helaili/probot-deploy)
+# deploy [![Build Status](https://travis-ci.org/helaili/deploy.svg?branch=master)](https://travis-ci.org/helaili/deploy)
 
 A [Probot](https://github.com/probot/probot) app triggering deployment events on GitHub based on pull request labels.
 
 ![probt-deploy-640](https://user-images.githubusercontent.com/2787414/44789192-3f4c1a00-ab9c-11e8-9093-353dfbe1bc1e.gif)
 
-:warning: This app doesn't deploy anything. :warning:  It just triggers a deployment request which will be forwarded to any webhook listening to the deploy event on your repo or on your organization. Check GitHub's [deployment API](https://developer.github.com/v3/repos/deployments/) for more information. 
+:warning: This app doesn't deploy anything. :warning:  It just triggers a deployment request which will be forwarded to any webhook listening to the deploy event on your repo or on your organization. Check GitHub's [deployment API](https://developer.github.com/v3/repos/deployments/) for more information.
 
 ## Setup
 
 - Install the app from [its public page](https://github.com/apps/deploy)
 
-- Commit a `.github/probot-config.yml` file in your repository with the description of your environments. Spaces must be escaped. You can use whichever [environment parameter](https://developer.github.com/v3/repos/deployments/#parameters) used by GitHub's deployment API
+- Commit a `.github/deploy.yml` file in your repository with the description of your environments. Spaces must be escaped. You can use whichever [environment parameter](https://developer.github.com/v3/repos/deployments/#parameters) used by GitHub's deployment API
 
 
 ```
@@ -48,7 +48,7 @@ If your branch is conflicting with master, your deployment will fail (see below)
 
 ![image](https://user-images.githubusercontent.com/2787414/44785703-22aae480-ab92-11e8-95f3-617455932a41.png)
 
-This app works for both github.com and GitHub Enterprise. In the later case, you will need to run your own instance of this app as described in [the Pobot documentation](https://probot.github.io/docs/deployment/). Do not forgot to set the `GHE_HOST` environment variable as described [here](https://probot.github.io/docs/github-api/#github-enterprise). 
+This app works for both github.com and GitHub Enterprise. In the later case, you will need to run your own instance of this app as described in [the Pobot documentation](https://probot.github.io/docs/deployment/). Do not forgot to set the `GHE_HOST` environment variable as described [here](https://probot.github.io/docs/github-api/#github-enterprise).
 
 ## Contributing
 

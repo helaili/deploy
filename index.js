@@ -20,7 +20,7 @@ module.exports = app => {
   })
 
   app.on('pull_request.labeled', async context => {
-    const config = await getConfig(context, 'probot-config.yml')
+    const config = await getConfig(context, 'deploy.yml')
 
     let labelName = context.payload.label.name
     let encodedLabelName = encodeURI(labelName)
