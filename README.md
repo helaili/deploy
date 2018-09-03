@@ -1,4 +1,4 @@
-# probot-deploy [![Build Status](https://travis-ci.org/helaili/probot-deploy.svg?branch=master)](https://travis-ci.org/helaili/probot-deploy)
+# deploy [![Build Status](https://travis-ci.org/helaili/probot-deploy.svg?branch=master)](https://travis-ci.org/helaili/probot-deploy)
 
 A [Probot](https://github.com/probot/probot) app triggering deployment events on GitHub based on pull request labels.
 
@@ -8,7 +8,7 @@ A [Probot](https://github.com/probot/probot) app triggering deployment events on
 
 ## Setup
 
-- Install the app from [its public page](https://github.com/apps/probot-deploy)
+- Install the app from [its public page](https://github.com/apps/deploy)
 
 - Commit a `.github/probot-config.yml` file in your repository with the description of your environments. Spaces must be escaped. You can use whichever [environment parameter](https://developer.github.com/v3/repos/deployments/#parameters) used by GitHub's deployment API
 
@@ -52,10 +52,10 @@ This app works for both github.com and GitHub Enterprise. In the later case, you
 
 ## Contributing
 
-If you have suggestions for how probot-deploy could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+If you have suggestions for how *deploy* could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
 For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
-[ISC](LICENSE) © 2018 Alain Hélaïli <helaili@github.com> (https://helaili.gitub.io/probot-deploy)
+[ISC](LICENSE) © 2018 Alain Hélaïli <helaili@github.com> (https://gitub.com/helaili/deploy)
