@@ -55,7 +55,7 @@ describe('My Probot app', () => {
   test('creates a deployment when a deploy label is applied to a PR', async () => {
     // Simulates delivery of an issues.opened webhook
     await app.receive({
-      event: 'pull_request.labeled',
+      name: 'pull_request.labeled',
       payload: deployLabelAppliedPayload
     })
 
@@ -66,7 +66,7 @@ describe('My Probot app', () => {
   test('do not create a deployment when a non deploy label is applied to a PR', async () => {
     // Simulates delivery of an issues.opened webhook
     await app.receive({
-      event: 'pull_request.labeled',
+      name: 'pull_request.labeled',
       payload: nonDeployLabelAppliedPayload
     })
 
@@ -80,7 +80,7 @@ describe('My Probot app', () => {
 
     // Simulates delivery of an issues.opened webhook
     await app.receive({
-      event: 'pull_request.labeled',
+      name: 'pull_request.labeled',
       payload: deployLabelAppliedPayload
     })
 

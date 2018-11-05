@@ -3,8 +3,6 @@
  * @param {import('probot').Application} app - Probot's Application class.
  */
 module.exports = app => {
-  const getConfig = require('probot-config')
-
   // Get an express router to expose new HTTP endpoints
   const router = app.route('/my-app')
   router.use(require('express').static('public'))
@@ -20,7 +18,7 @@ module.exports = app => {
   })
 
   app.on('pull_request.labeled', async context => {
-    const config = await getConfig(context, 'deploy.yml')
+    const config = await context.config('deploy.yml')
 
     let labelName = context.payload.label.name
     let encodedLabelName = encodeURI(labelName)
