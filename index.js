@@ -3,7 +3,6 @@
  * @param {import('probot').Application} app - Probot's Application class.
  */
 module.exports = app => {
-
   // Get an express router to expose new HTTP endpoints
   const router = app.route('/my-app')
   router.use(require('express').static('public'))
