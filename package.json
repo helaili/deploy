@@ -30,7 +30,7 @@
     "standard": "^10.0.3"
   },
   "engines": {
-    "node": ">= 8.3.0"
+    "node": ">= 9.2.0"
   },
   "standard": {
     "env": [
