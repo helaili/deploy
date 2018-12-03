@@ -23,7 +23,7 @@ module.exports = app => {
     let labelName = context.payload.label.name
     let encodedLabelName = encodeURI(labelName)
 
-    if (config.labels[encodedLabelName]) {
+    if (config && config.labels && config.labels[encodedLabelName]) {
       let deployment = config.labels[encodedLabelName]
       deployment.owner = context.payload.pull_request.head.repo.owner.login
       deployment.repo = context.payload.pull_request.head.repo.name
