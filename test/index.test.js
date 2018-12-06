@@ -5,7 +5,7 @@ const myProbotApp = require('..')
 
 const deployLabelAppliedPayload = require('./fixtures/deploy-test_label.applied.json')
 const nonDeployLabelAppliedPayload = require('./fixtures/bug_label.applied.json')
-const configFile = './fixtures/probot-config.yml'
+const configFile = './fixtures/deploy.yml'
 
 /*
  * Load the config file
@@ -23,7 +23,27 @@ function readMockConfig (fileName) {
   return configData
 }
 
-describe('My Probot app', () => {
+function initialize (configFile) {
+  let configData = Buffer.from(readMockConfig(configFile)).toString('base64')
+
+  // This is an easy way to mock out the GitHub API
+  return {
+    issues: {
+      removeLabel: jest.fn().mockReturnValue(Promise.resolve({})),
+      createComment: jest.fn().mockReturnValue(Promise.resolve({}))
+    },
+    repos: {
+      createDeployment: jest.fn().mockReturnValue(Promise.resolve({})),
+      getContent: jest.fn().mockReturnValue({
+        data: {
+          content: configData
+        }
+      })
+    }
+  }
+}
+
+describe('Deploy Probot app', () => {
   let app, github
 
   beforeEach(() => {
@@ -31,23 +51,7 @@ describe('My Probot app', () => {
     // Initialize the app based on the code from index.js
     app.load(myProbotApp)
 
-    let configData = Buffer.from(readMockConfig(configFile)).toString('base64')
-
-    // This is an easy way to mock out the GitHub API
-    github = {
-      issues: {
-        removeLabel: jest.fn().mockReturnValue(Promise.resolve({})),
-        createComment: jest.fn().mockReturnValue(Promise.resolve({}))
-      },
-      repos: {
-        createDeployment: jest.fn().mockReturnValue(Promise.resolve({})),
-        getContent: jest.fn().mockReturnValue({
-          data: {
-            content: configData
-          }
-        })
-      }
-    }
+    github = initialize(configFile)
     // Passes the mocked out GitHub API into out app instance
     app.auth = () => Promise.resolve(github)
   })
@@ -87,5 +91,20 @@ describe('My Probot app', () => {
     expect(github.repos.createDeployment).toHaveBeenCalled()
     expect(github.issues.removeLabel).toHaveBeenCalled()
     expect(github.issues.createComment).toHaveBeenCalled()
+  })
+
+  test('do not create a deployment when config is not valid', async () => {
+    github = initialize('./fixtures/deploy-bad-config.yml')
+    // Passes the mocked out GitHub API into out app instance
+    app.auth = () => Promise.resolve(github)
+
+    // Simulates delivery of an issues.opened webhook
+    await app.receive({
+      name: 'pull_request.labeled',
+      payload: nonDeployLabelAppliedPayload
+    })
+
+    expect(github.repos.createDeployment).not.toHaveBeenCalled()
+    expect(github.issues.removeLabel).not.toHaveBeenCalled()
   })
 })
