@@ -29,6 +29,9 @@ module.exports = app => {
       deployment.owner = context.payload.pull_request.head.repo.owner.login
       deployment.repo = context.payload.pull_request.head.repo.name
       deployment.ref = context.payload.pull_request.head.ref
+      deployment.headers = {
+        accept: 'application/vnd.github.ant-man-preview+json'
+      }
 
       context.github.repos.createDeployment(deployment).then(function (deploymentResult) {
         return deploymentResult
