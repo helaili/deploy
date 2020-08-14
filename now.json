@@ -1,1 +1,13 @@
-{}
+{
+  "name": "probot-deploy-dotcom",
+  "version": 2,
+  "env": {
+    "APP_ID": "@APP_ID",
+    "WEBHOOK_SECRET": "@WEBHOOK_SECRET",
+    "PRIVATE_KEY_BASE64": "@PRIVATE_KEY_BASE64",
+    "SENTRY_DSN": "@SENTRY_DSN",
+    "NODE_ENV": "production"
+  },
+  "builds": [{ "src": "index.js", "use": "@now/node" }],
+  "routes": [{ "src": "/", "dest": "/index.js" }]
+}
