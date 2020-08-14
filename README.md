@@ -58,4 +58,4 @@ For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
-[ISC](#LICENSE) © 2018 Alain Hélaïli <helaili@github.com> (https://github.com/helaili/deploy)
+[ISC](#LICENSE) © 2020 Alain Hélaïli <helaili@github.com> (https://github.com/helaili/deploy)
